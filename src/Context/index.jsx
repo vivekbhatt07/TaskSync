@@ -1,3 +1,3 @@
 import { useTheme, ThemeProvider } from "./ThemeContext";
-
-export { useTheme, ThemeProvider };
+import { useTask, TaskProvider } from "./TaskContext";
+export { useTheme, ThemeProvider, useTask, TaskProvider };

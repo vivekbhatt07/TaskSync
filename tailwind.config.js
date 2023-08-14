@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
@@ -24,6 +25,7 @@ export default {
       progress: "#fb923c",
       testing: "#a1a1aa",
       done: "#22c55e",
+      darkModeOne: "#11100f",
     },
     fontFamily: {
       sans: ["Graphik", "sans-serif"],

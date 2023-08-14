@@ -1,7 +1,7 @@
 import React from "react";
-
+import { PageWrapper } from "../../Layout";
 const Tasks = () => {
-  return <div className="">Tasks</div>;
+  return <PageWrapper></PageWrapper>;
 };
 
 export default Tasks;

@@ -4,9 +4,9 @@ import { useTask } from "../../../Context/TaskContext";
 import SecondaryCard from "../SecondaryCard";
 
 const PrimaryCard = ({ cardVariant }) => {
-  const { state } = useTask();
+  const { state, filteredTaskList } = useTask();
 
-  const currentStatusTaskList = state.taskList.filter((currentTask) => {
+  const currentStatusTaskList = filteredTaskList.filter((currentTask) => {
     return currentTask.status === cardVariant;
   });
 

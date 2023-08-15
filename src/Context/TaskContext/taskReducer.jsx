@@ -3,5 +3,11 @@ export const taskReducer = (state, { type, payload }) => {
     case "SET_DATA": {
       return { ...state, taskList: payload };
     }
+    case `FILTER_BY_${payload.label}`: {
+      return {
+        ...state,
+        filterBy: { ...state.filterBy, searchText: payload.value },
+      };
+    }
   }
 };

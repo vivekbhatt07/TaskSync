@@ -4,7 +4,7 @@ import { useTask } from "../../Context/TaskContext";
 import { PrimaryCard, Filter } from "../../Components";
 
 const Tasks = () => {
-  const { state, dispatch } = useTask();
+  const { state, dispatch, filteredTaskList } = useTask();
 
   const gridFour = {
     display: "grid",

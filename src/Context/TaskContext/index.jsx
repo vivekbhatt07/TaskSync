@@ -8,12 +8,31 @@ import React, {
 import axios from "axios";
 import { initialState } from "./initialState";
 import { taskReducer } from "./taskReducer";
+import { simplifiedString } from "../../Utils";
 
 const TaskContext = createContext();
 
 const TaskProvider = ({ children }) => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
   const [isLoading, setIsLoading] = useState(false);
+
+  let filteredTaskList = state.taskList;
+
+  if (state.filterBy.searchText) {
+    filteredTaskList = filteredTaskList.filter((currentTask) => {
+      return (
+        simplifiedString(currentTask.name).includes(
+          simplifiedString(state.filterBy.searchText)
+        ) ||
+        simplifiedString(currentTask.assignee).includes(
+          simplifiedString(state.filterBy.searchText)
+        ) ||
+        simplifiedString(currentTask.type).includes(
+          simplifiedString(state.filterBy.searchText)
+        )
+      );
+    });
+  }
 
   useEffect(() => {
     (async () => {
@@ -35,7 +54,7 @@ const TaskProvider = ({ children }) => {
   }, []);
 
   return (
-    <TaskContext.Provider value={{ state, dispatch }}>
+    <TaskContext.Provider value={{ state, dispatch, filteredTaskList }}>
       {children}
     </TaskContext.Provider>
   );

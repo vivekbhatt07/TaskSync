@@ -1,5 +1,5 @@
 import React from "react";
-import { FilterList, Close, ExpandMore } from "@mui/icons-material";
+import { FilterList, Close, ExpandMore, Search } from "@mui/icons-material";
 import {
   Button,
   Menu,
@@ -16,6 +16,7 @@ import {
   Radio,
 } from "@mui/material";
 import { useTask } from "../../Context/TaskContext";
+import "./Filter.css";
 
 const Filter = () => {
   const { state, dispatch } = useTask();
@@ -41,7 +42,26 @@ const Filter = () => {
   }, []);
 
   return (
-    <div>
+    <div className="flex gap-4 py-1 px-4">
+      <div className="relative flex input_filter_wrap bg-[#fff]">
+        <label className="flex gap-2 px-2">
+          <div className="py-2">
+            <Search />
+          </div>
+          <input
+            className="input_filter"
+            placeholder="Search by Name, Type  and Assignee"
+            type="search"
+            value={state.filterBy.searchText}
+            onChange={(e) => {
+              dispatch({
+                type: "FILTER_BY_SEARCH",
+                payload: { label: "SEARCH", value: e.target.value },
+              });
+            }}
+          />
+        </label>
+      </div>
       <Button
         variant="outlined"
         sx={{

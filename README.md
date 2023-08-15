@@ -20,7 +20,7 @@ $ npm run dev
 5. Search functionality, which will search by task name from any group (Ready/In progress/Testing/Done)
 6. Filters like filter by Start/End dates, filter by assignee, filter by severity of the task
 7. Unique badges to each task based on severity (High/Medium/Low)
-8. Light and dark mode
+8. Light mode and dark mode
 
 ## Technology Used -
 

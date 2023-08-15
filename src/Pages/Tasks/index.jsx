@@ -3,16 +3,11 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { PageWrapper } from "../../Layout";
 import { useTask } from "../../Context/TaskContext";
 import { PrimaryCard, Filter } from "../../Components";
+import "./Tasks.css";
 
 const taskStatusList = ["Ready", "In Progress", "Testing", "Done"];
 const Tasks = () => {
   const { state, dispatch, filteredTaskList } = useTask();
-
-  const gridFour = {
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-    gap: "16px",
-  };
 
   const handleDragEnd = (result) => {
     const { destination, source, draggableId } = result;
@@ -57,7 +52,7 @@ const Tasks = () => {
     <PageWrapper>
       <Filter />
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div style={gridFour} className="p-8">
+        <div className="p-8 task_list">
           {taskStatusList.map((currentTask, currentIndex) => {
             return <PrimaryCard key={currentIndex} cardVariant={currentTask} />;
           })}

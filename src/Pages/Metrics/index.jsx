@@ -46,7 +46,7 @@ const Metrics = () => {
   };
   return (
     <PageWrapper>
-      <div className="flex justify-center items-center w-full">
+      <div className="flex justify-center items-center w-full py-8">
         <div className="w-[300px]">
           <PieChart data={pieData} label="PIE CHART: Showing Priority Data" />
         </div>

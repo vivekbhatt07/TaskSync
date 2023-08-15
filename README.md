@@ -28,6 +28,7 @@ $ npm run dev
 - React Context API + useReducer
 - React Router v6
 - Tailwind CSS
-- React-dnd
+- react-beautiful-dnd
 - Chart.js
-- React Icons
+- MUI Icons
+- MUI Components

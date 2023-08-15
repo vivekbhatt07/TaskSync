@@ -7,8 +7,8 @@ const PageWrapper = ({ children }) => {
   return (
     <>
       <Header />
-      <Main mainContent={children} />
       <Tab />
+      <Main mainContent={children} />
     </>
   );
 };

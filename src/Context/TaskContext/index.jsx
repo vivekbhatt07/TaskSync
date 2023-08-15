@@ -81,7 +81,9 @@ const TaskProvider = ({ children }) => {
   }, []);
 
   return (
-    <TaskContext.Provider value={{ state, dispatch, filteredTaskList }}>
+    <TaskContext.Provider
+      value={{ state, dispatch, filteredTaskList, isLoading }}
+    >
       {children}
     </TaskContext.Provider>
   );

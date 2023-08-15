@@ -2,17 +2,14 @@ import React, { useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { PageWrapper } from "../../Layout";
 import { useTask } from "../../Context/TaskContext";
-import { PrimaryCard, Filter } from "../../Components";
+import { PrimaryCard, Filter, LightLoader, DarkLoader } from "../../Components";
+import "./Tasks.css";
+import { useTheme } from "../../Context/ThemeContext";
 
 const taskStatusList = ["Ready", "In Progress", "Testing", "Done"];
 const Tasks = () => {
-  const { state, dispatch, filteredTaskList } = useTask();
-
-  const gridFour = {
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-    gap: "16px",
-  };
+  const { state, dispatch, filteredTaskList, isLoading } = useTask();
+  const { isDarkTheme } = useTheme();
 
   const handleDragEnd = (result) => {
     const { destination, source, draggableId } = result;
@@ -57,10 +54,14 @@ const Tasks = () => {
     <PageWrapper>
       <Filter />
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div style={gridFour} className="p-8">
-          {taskStatusList.map((currentTask, currentIndex) => {
-            return <PrimaryCard key={currentIndex} cardVariant={currentTask} />;
-          })}
+        <div className="p-8 task_list">
+          {isLoading && (isDarkTheme ? <DarkLoader /> : <LightLoader />)}
+          {!isLoading &&
+            taskStatusList.map((currentTask, currentIndex) => {
+              return (
+                <PrimaryCard key={currentIndex} cardVariant={currentTask} />
+              );
+            })}
         </div>
       </DragDropContext>
     </PageWrapper>

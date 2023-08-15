@@ -1,4 +1,5 @@
 import React from "react";
+import { DragDropContext } from "react-beautiful-dnd";
 import { PageWrapper } from "../../Layout";
 import { useTask } from "../../Context/TaskContext";
 import { PrimaryCard, Filter } from "../../Components";
@@ -18,14 +19,27 @@ const Tasks = () => {
       : [...list, currentTask.status];
   }, []);
 
+  const handleDragEnd = (result) => {
+    console.log(result);
+    const { destination, source } = result;
+    if (!destination) return;
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    )
+      return;
+  };
+
   return (
     <PageWrapper>
       <Filter />
-      <div style={gridFour} className="p-8">
-        {taskStatusList.map((currentTask, currentIndex) => {
-          return <PrimaryCard key={currentIndex} cardVariant={currentTask} />;
-        })}
-      </div>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <div style={gridFour} className="p-8">
+          {taskStatusList.map((currentTask, currentIndex) => {
+            return <PrimaryCard key={currentIndex} cardVariant={currentTask} />;
+          })}
+        </div>
+      </DragDropContext>
     </PageWrapper>
   );
 };

@@ -8,12 +8,58 @@ import React, {
 import axios from "axios";
 import { initialState } from "./initialState";
 import { taskReducer } from "./taskReducer";
+import { simplifiedString } from "../../Utils";
 
 const TaskContext = createContext();
 
 const TaskProvider = ({ children }) => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
   const [isLoading, setIsLoading] = useState(false);
+
+  let filteredTaskList = state.taskList;
+
+  // FILTER BY SEARCH:
+
+  if (state.filterBy.search) {
+    filteredTaskList = filteredTaskList.filter((currentTask) => {
+      return (
+        simplifiedString(currentTask.name).includes(
+          simplifiedString(state.filterBy.search)
+        ) ||
+        simplifiedString(currentTask.assignee).includes(
+          simplifiedString(state.filterBy.search)
+        ) ||
+        simplifiedString(currentTask.type).includes(
+          simplifiedString(state.filterBy.search)
+        )
+      );
+    });
+  }
+
+  // FILTER BY ASSIGNEE:
+
+  if (state.filterBy.assignee) {
+    state.selectedAssigneeList = state.selectedAssigneeList.some((current) => {
+      return current == state.filterBy.assignee;
+    })
+      ? state.selectedAssigneeList.filter((currentAssignee) => {
+          return currentAssignee !== state.filterBy.assignee;
+        })
+      : [...state.selectedAssigneeList, state.filterBy.assignee];
+
+    filteredTaskList =
+      state.selectedAssigneeList.length !== 0
+        ? filteredTaskList.filter((currentTask) => {
+            return state.selectedAssigneeList.includes(currentTask.assignee);
+          })
+        : filteredTaskList;
+  }
+
+  if (state.filterBy.priority) {
+    filteredTaskList = filteredTaskList.filter((currentTask) => {
+      return currentTask.priority == state.filterBy.priority;
+    });
+  }
 
   useEffect(() => {
     (async () => {
@@ -35,7 +81,7 @@ const TaskProvider = ({ children }) => {
   }, []);
 
   return (
-    <TaskContext.Provider value={{ state, dispatch }}>
+    <TaskContext.Provider value={{ state, dispatch, filteredTaskList }}>
       {children}
     </TaskContext.Provider>
   );

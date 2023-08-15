@@ -53,17 +53,6 @@ const Tasks = () => {
     dispatch({ type: "SET_DATA", payload: updatedTaskList });
   };
 
-  const handleDragEnd = (result) => {
-    console.log(result);
-    const { destination, source } = result;
-    if (!destination) return;
-    if (
-      source.droppableId === destination.droppableId &&
-      source.index === destination.index
-    )
-      return;
-  };
-
   return (
     <PageWrapper>
       <Filter />

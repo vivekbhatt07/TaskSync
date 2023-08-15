@@ -114,7 +114,21 @@ const Filter = () => {
                       control={
                         <Checkbox
                           key={currentIndex}
-                          defaultChecked
+                          value={currentAssignee}
+                          checked={Boolean(
+                            state.selectedAssigneeList.find(
+                              (currentItem) => currentItem == currentAssignee
+                            )
+                          )}
+                          onChange={(e) => {
+                            dispatch({
+                              type: "FILTER_BY_ASSIGNEE",
+                              payload: {
+                                label: "ASSIGNEE",
+                                value: e.target.value,
+                              },
+                            });
+                          }}
                           sx={{
                             color: "lightblue",
                             "&.Mui-checked": {

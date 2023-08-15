@@ -18,20 +18,41 @@ const TaskProvider = ({ children }) => {
 
   let filteredTaskList = state.taskList;
 
-  if (state.filterBy.searchText) {
+  // FILTER BY SEARCH:
+
+  if (state.filterBy.search) {
     filteredTaskList = filteredTaskList.filter((currentTask) => {
       return (
         simplifiedString(currentTask.name).includes(
-          simplifiedString(state.filterBy.searchText)
+          simplifiedString(state.filterBy.search)
         ) ||
         simplifiedString(currentTask.assignee).includes(
-          simplifiedString(state.filterBy.searchText)
+          simplifiedString(state.filterBy.search)
         ) ||
         simplifiedString(currentTask.type).includes(
-          simplifiedString(state.filterBy.searchText)
+          simplifiedString(state.filterBy.search)
         )
       );
     });
+  }
+
+  // FILTER BY ASSIGNEE:
+
+  if (state.filterBy.assignee) {
+    state.selectedAssigneeList = state.selectedAssigneeList.some((current) => {
+      return current == state.filterBy.assignee;
+    })
+      ? state.selectedAssigneeList.filter((currentAssignee) => {
+          return currentAssignee !== state.filterBy.assignee;
+        })
+      : [...state.selectedAssigneeList, state.filterBy.assignee];
+
+    filteredTaskList =
+      state.selectedAssigneeList.length !== 0
+        ? filteredTaskList.filter((currentTask) => {
+            return state.selectedAssigneeList.includes(currentTask.assignee);
+          })
+        : filteredTaskList;
   }
 
   useEffect(() => {

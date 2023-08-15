@@ -1,6 +1,8 @@
 export const initialState = {
   taskList: [],
+  selectedAssigneeList: [],
   filterBy: {
-    searchText: "",
+    search: "",
+    assignee: "",
   },
 };

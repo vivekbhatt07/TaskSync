@@ -1,4 +1,4 @@
-# Organizely
+# Task Sync
 
 [Task-Sync](https://task-sync-rho.vercel.app/) - Task Managment App
 

@@ -7,13 +7,11 @@ import { ThemeProvider } from "./Context/index.jsx";
 import { TaskProvider } from "./Context/index.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Router>
-      <ThemeProvider>
-        <TaskProvider>
-          <App />
-        </TaskProvider>
-      </ThemeProvider>
-    </Router>
-  </React.StrictMode>
+  <Router>
+    <ThemeProvider>
+      <TaskProvider>
+        <App />
+      </TaskProvider>
+    </ThemeProvider>
+  </Router>
 );

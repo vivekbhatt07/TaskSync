@@ -5,7 +5,7 @@ import { Tasks, Metrics } from "./Pages";
 
 const App = () => {
   return (
-    <div className="bg-50 dark:bg-darkModeOne min-h-screen dark:text-50">
+    <div className="bg-50 dark:bg-darkModeOne min-h-screen dark:text-50 transition-all duration-500">
       <Routes>
         <Route path="/" element={<Tasks />} />
         <Route path="/metrics" element={<Metrics />} />

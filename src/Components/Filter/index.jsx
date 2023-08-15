@@ -1,5 +1,11 @@
 import React from "react";
-import { FilterList, Close, ExpandMore, Search } from "@mui/icons-material";
+import {
+  FilterList,
+  Close,
+  ExpandMore,
+  Search,
+  Clear,
+} from "@mui/icons-material";
 import {
   Button,
   Menu,
@@ -193,6 +199,21 @@ const Filter = () => {
           </Accordion>
         </div>
       </Menu>
+      <Button
+        variant="outlined"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          textTransform: "capitalize",
+        }}
+        onClick={(e) => {
+          dispatch({ type: "CLEAR_FILTER", payload: "" });
+        }}
+      >
+        <Clear />
+        Clear Filter
+      </Button>
     </div>
   );
 };

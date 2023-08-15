@@ -12,5 +12,15 @@ export const taskReducer = (state, { type, payload }) => {
         },
       };
     }
+    case "CLEAR_FILTER": {
+      return {
+        ...state,
+        filterBy: {
+          search: "",
+          assignee: "",
+          priority: "",
+        },
+      };
+    }
   }
 };

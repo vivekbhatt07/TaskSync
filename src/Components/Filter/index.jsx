@@ -157,7 +157,6 @@ const Filter = () => {
                 <div>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="female"
                     name="radio-buttons-group"
                   >
                     {priorityList.map((currentPriority, currentIndex) => {
@@ -165,7 +164,23 @@ const Filter = () => {
                         <div key={currentIndex}>
                           <FormControlLabel
                             value={currentPriority}
-                            control={<Radio />}
+                            control={
+                              <Radio
+                                value={currentPriority}
+                                checked={
+                                  state.filterBy.priority == currentPriority
+                                }
+                                onChange={(e) => {
+                                  dispatch({
+                                    type: "FILTER_BY_PRIORITY",
+                                    payload: {
+                                      label: "PRIORITY",
+                                      value: e.target.value,
+                                    },
+                                  });
+                                }}
+                              />
+                            }
                             label={currentPriority}
                           />
                         </div>

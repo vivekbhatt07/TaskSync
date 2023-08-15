@@ -4,5 +4,6 @@ export const initialState = {
   filterBy: {
     search: "",
     assignee: "",
+    priority: "",
   },
 };

@@ -55,6 +55,12 @@ const TaskProvider = ({ children }) => {
         : filteredTaskList;
   }
 
+  if (state.filterBy.priority) {
+    filteredTaskList = filteredTaskList.filter((currentTask) => {
+      return currentTask.priority == state.filterBy.priority;
+    });
+  }
+
   useEffect(() => {
     (async () => {
       setIsLoading(true);

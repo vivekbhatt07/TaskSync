@@ -61,28 +61,90 @@ const TaskProvider = ({ children }) => {
     });
   }
 
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(
-          "https://gcp-mock.apiwiz.io/v1/tasks",
-          { headers: "x-tenant: b4349714-47c7-4605-a81c-df509fc7e653" }
-        );
-        if (response.status === 200) {
-          dispatch({ type: "SET_DATA", payload: response.data });
-        }
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsLoading(false);
+  // CRUD OPERATIONS:
+
+  const getAllTasks = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        "https://tasksync-nodejs-restapi.onrender.com/tasks"
+      );
+      if (response.status === 200) {
+        dispatch({ type: "SET_DATA", payload: response.data });
       }
-    })();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const addNewTask = async (task) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        "https://tasksync-nodejs-restapi.onrender.com/tasks",
+        task
+      );
+      if (response.status === 200) {
+        dispatch({ type: "ADD_NEW_TASK", payload: response.data.data });
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updateTask = async (taskId, updatedTask) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `https://tasksync-nodejs-restapi.onrender.com/tasks/${taskId}`,
+        updatedTask
+      );
+      if (response.status === 200) {
+        dispatch({ type: "UPDATE_TASK", payload: response.data.data });
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const deleteTask = async (taskId) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.delete(
+        `https://tasksync-nodejs-restapi.onrender.com/tasks/${taskId}`
+      );
+      if (response.status === 200) {
+        dispatch({ type: "DELETE_TASK", payload: response.data.data });
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getAllTasks();
   }, []);
 
   return (
     <TaskContext.Provider
-      value={{ state, dispatch, filteredTaskList, isLoading }}
+      value={{
+        state,
+        dispatch,
+        filteredTaskList,
+        isLoading,
+        getAllTasks,
+        addNewTask,
+        updateTask,
+        deleteTask,
+      }}
     >
       {children}
     </TaskContext.Provider>

@@ -34,7 +34,7 @@ const Tasks = () => {
       ) {
         taskPlacementIndex = index;
       }
-      if (`${task.id}` === `${draggableId}`) {
+      if (`${task._id}` === `${draggableId}`) {
         updatingTask = task;
         return false;
       }

@@ -48,7 +48,7 @@ const PrimaryCard = ({ cardVariant }) => {
               {currentStatusTaskList.map((currentTask, index) => {
                 return (
                   <SecondaryCard
-                    key={currentTask.id}
+                    key={currentTask._id}
                     {...currentTask}
                     index={index}
                   />

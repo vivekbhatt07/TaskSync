@@ -13,16 +13,16 @@ import {
 
 const SecondaryCard = (props) => {
   const {
-    id,
+    _id,
     name,
     summary,
     assignee,
-    effortSpent,
+    effortSpent = 20,
     endDate,
     priority,
     startDate,
     status,
-    type,
+    taskType,
     index,
   } = props;
 
@@ -44,7 +44,7 @@ const SecondaryCard = (props) => {
 
   return (
     <div>
-      <Draggable draggableId={id.toString()} index={index}>
+      <Draggable draggableId={_id} index={index}>
         {(provided, snapshot) => (
           <article
             className={`rounded-sm p-4 bg-[#fff] flex flex-col gap-2 secondaryCard relative dark:bg-800 ${
@@ -58,7 +58,7 @@ const SecondaryCard = (props) => {
             <p className="text-sm text-[#404040] dark:text-400">{summary}</p>
             <div className="flex gap-4">
               <span className="text-xs font-medium">Task Type:</span>
-              <span className="text-xs">{type}</span>
+              <span className="text-xs">{taskType}</span>
             </div>
             <div className="border-b pb-4 flex gap-4 border-[#ddd]">
               <span className="text-xs font-medium">Assigned By:</span>

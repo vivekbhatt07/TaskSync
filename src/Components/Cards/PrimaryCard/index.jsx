@@ -55,16 +55,6 @@ const PrimaryCard = ({ cardVariant }) => {
                 );
               })}
             </div>
-            {cardVariant !== "Done" && (
-              <div className="rounded-sm hover:scale-[1.02] transition-all active:scale-100">
-                <button className="flex items-center border-0 px-4 py-4 w-full gap-4 text-500 bg-200 dark:bg-800">
-                  <div className="">
-                    <Add />
-                  </div>
-                  <span>Add Task</span>
-                </button>
-              </div>
-            )}
             {provided.placeholder}
           </article>
         )}

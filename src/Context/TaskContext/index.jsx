@@ -86,7 +86,10 @@ const TaskProvider = ({ children }) => {
         "https://tasksync-nodejs-restapi.onrender.com/tasks",
         task
       );
-      if (response.status === 200) {
+      console.log(response);
+
+      if (response.status === 201) {
+        console.log(response);
         dispatch({ type: "ADD_NEW_TASK", payload: response.data.task });
       }
     } catch (error) {

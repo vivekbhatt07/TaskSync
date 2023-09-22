@@ -87,7 +87,7 @@ const TaskProvider = ({ children }) => {
         task
       );
       if (response.status === 200) {
-        dispatch({ type: "ADD_NEW_TASK", payload: response.data.data });
+        dispatch({ type: "ADD_NEW_TASK", payload: response.data.task });
       }
     } catch (error) {
       console.error(error);
@@ -104,7 +104,7 @@ const TaskProvider = ({ children }) => {
         updatedTask
       );
       if (response.status === 200) {
-        dispatch({ type: "UPDATE_TASK", payload: response.data.data });
+        dispatch({ type: "UPDATE_TASK", payload: response.data.task });
       }
     } catch (error) {
       console.error(error);
@@ -120,7 +120,7 @@ const TaskProvider = ({ children }) => {
         `https://tasksync-nodejs-restapi.onrender.com/tasks/${taskId}`
       );
       if (response.status === 200) {
-        dispatch({ type: "DELETE_TASK", payload: response.data.data });
+        dispatch({ type: "DELETE_TASK", payload: response.data.deletedTask });
       }
     } catch (error) {
       console.error(error);

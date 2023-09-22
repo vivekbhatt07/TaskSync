@@ -3,25 +3,17 @@ export const taskReducer = (state, { type, payload }) => {
     case "SET_DATA": {
       return { ...state, taskList: [...payload] };
     }
-    case `FILTER_BY_${payload.label}`: {
-      return {
-        ...state,
-        filterBy: {
-          ...state.filterBy,
-          [payload.label.toLowerCase()]: payload.value,
-        },
-      };
-    }
+
     case "ADD_NEW_TASK": {
       return {
         ...state,
-        taskList: [...state.taskList, action.payload],
+        taskList: [...state.taskList, payload],
       };
     }
 
     case "UPDATE_TASK": {
       const updatedTaskList = state.taskList.map((task) => {
-        return task._id === action.payload._id ? updatedTask : task;
+        return task._id === payload._id ? updatedTask : task;
       });
 
       return {
@@ -32,7 +24,7 @@ export const taskReducer = (state, { type, payload }) => {
 
     case "DELETE_TASK": {
       const updatedTaskList = state.taskList.filter(
-        (task) => task._id !== action.payload._id
+        (task) => task._id !== payload._id
       );
       return {
         ...state,
@@ -49,6 +41,7 @@ export const taskReducer = (state, { type, payload }) => {
         },
       };
     }
+
     case "CLEAR_FILTER": {
       return {
         ...state,

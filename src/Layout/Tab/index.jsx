@@ -38,6 +38,7 @@ const Tab = () => {
   const handleAddTaskSubmit = (event) => {
     event.preventDefault();
     addNewTask(addTaskData);
+    closeAddModal();
   };
 
   const priorityList = ["Low", "Medium", "High"];
@@ -45,7 +46,7 @@ const Tab = () => {
 
   return (
     <ul className="bg-200 flex dark:bg-600">
-      {tabData.map((currentTab) => {
+      {tabData.map((currentTab, tabIndex) => {
         return <TabItem key={currentTab.id} {...currentTab} />;
       })}
       <ModalProvider
@@ -92,8 +93,10 @@ const Tab = () => {
                 label="Task Priority"
                 onChange={handleAddTask}
               >
-                {priorityList.map((priority) => (
-                  <MenuItem value={priority}>{priority}</MenuItem>
+                {priorityList.map((priority, priorityIndex) => (
+                  <MenuItem value={priority} key={priorityIndex}>
+                    {priority}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -105,8 +108,10 @@ const Tab = () => {
                 label="Task Status"
                 onChange={handleAddTask}
               >
-                {StatusList.map((status) => (
-                  <MenuItem value={status}>{status}</MenuItem>
+                {StatusList.map((status, statusIndex) => (
+                  <MenuItem value={status} key={statusIndex}>
+                    {status}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>

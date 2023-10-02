@@ -86,10 +86,8 @@ const TaskProvider = ({ children }) => {
         "https://tasksyncapi.azurewebsites.net/tasks",
         task
       );
-      console.log(response);
 
       if (response.status === 201) {
-        console.log(response);
         dispatch({ type: "ADD_NEW_TASK", payload: response.data.task });
       }
     } catch (error) {
@@ -99,15 +97,15 @@ const TaskProvider = ({ children }) => {
     }
   };
 
-  const updateTask = async (taskId, updatedTask) => {
+  const updateTask = async (taskId, updatedData) => {
     setIsLoading(true);
     try {
       const response = await axios.post(
         `https://tasksyncapi.azurewebsites.net/tasks/${taskId}`,
-        updatedTask
+        updatedData
       );
       if (response.status === 200) {
-        dispatch({ type: "UPDATE_TASK", payload: response.data.task });
+        dispatch({ type: "UPDATE_TASK", payload: response.data?.updatedTask });
       }
     } catch (error) {
       console.error(error);

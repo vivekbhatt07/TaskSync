@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { Draggable } from "react-beautiful-dnd";
 import Tooltip from "@mui/material/Tooltip";
@@ -17,9 +17,14 @@ import {
 import { IconButton } from "@mui/material";
 import { truncateString } from "../../../Utils";
 import { useTask } from "../../../Context";
+import ModalProvider from "../../ModalProvider";
+import { AddUpdateForm } from "../../Form";
 
 const SecondaryCard = (props) => {
-  const { deleteTask } = useTask();
+  const { deleteTask, updateTask } = useTask();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const openEditModal = () => setIsEditModalOpen(true);
+  const closeEditModal = () => setIsEditModalOpen(false);
   const {
     _id,
     name,
@@ -97,11 +102,24 @@ const SecondaryCard = (props) => {
                     <Delete />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Edit">
-                  <IconButton>
-                    <Edit />
-                  </IconButton>
-                </Tooltip>
+                <ModalProvider
+                  title="UPDATE TASK"
+                  isOpen={isEditModalOpen}
+                  closeModal={closeEditModal}
+                  OpenModalAction={
+                    <Tooltip title="Edit">
+                      <IconButton onClick={openEditModal}>
+                        <Edit />
+                      </IconButton>
+                    </Tooltip>
+                  }
+                >
+                  <AddUpdateForm
+                    closeForm={closeEditModal}
+                    formAction={updateTask}
+                    isEdit={props}
+                  />
+                </ModalProvider>
               </div>
             </div>
             <div className="flex justify-between">

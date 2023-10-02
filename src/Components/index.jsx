@@ -4,6 +4,7 @@ import { BarGraph, PieChart } from "./Diagrams";
 import Filter from "./Filter";
 import { LightLoader, DarkLoader } from "./Loader";
 import ModalProvider from "./ModalProvider";
+import { AddUpdateForm } from "./Form";
 
 export {
   OutlinedAction,
@@ -15,4 +16,5 @@ export {
   LightLoader,
   DarkLoader,
   ModalProvider,
+  AddUpdateForm,
 };

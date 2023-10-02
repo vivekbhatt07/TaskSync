@@ -13,7 +13,7 @@ export const taskReducer = (state, { type, payload }) => {
 
     case "UPDATE_TASK": {
       const updatedTaskList = state.taskList.map((task) => {
-        return task._id === payload._id ? updatedTask : task;
+        return task._id === payload._id ? payload : task;
       });
 
       return {

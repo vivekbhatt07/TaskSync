@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { tabData } from "./TabData";
 import TabItem from "./TabItem";
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import { useTask } from "../../Context";
 import ModalProvider from "../../Components/ModalProvider";
 import { AddUpdateForm } from "../../Components";
+import { Add } from "@mui/icons-material";
+import { toastHandler } from "../../Utils";
 
 const Tab = () => {
   const { addNewTask } = useTask();
@@ -22,9 +24,23 @@ const Tab = () => {
         isOpen={isAddModalOpen}
         closeModal={closeAddModal}
         OpenModalAction={
-          <Button variant="contained" onClick={openAddModal}>
-            ADD TASK
-          </Button>
+          <Tooltip title="Add Task">
+            <Button
+              variant="contained"
+              onClick={() => {
+                openAddModal();
+              }}
+              sx={{
+                borderRadius: "0",
+                boxShadow: "none",
+                backgroundColor: "#60a5fa",
+                padding: "8px",
+                "&:hover": { boxShadow: "none", backgroundColor: "#3b82f6" },
+              }}
+            >
+              <Add />
+            </Button>
+          </Tooltip>
         }
       >
         <AddUpdateForm closeForm={closeAddModal} formAction={addNewTask} />

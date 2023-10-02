@@ -8,7 +8,7 @@ import React, {
 import axios from "axios";
 import { initialState } from "./initialState";
 import { taskReducer } from "./taskReducer";
-import { simplifiedString } from "../../Utils";
+import { simplifiedString, toastHandler } from "../../Utils";
 
 const TaskContext = createContext();
 
@@ -88,6 +88,7 @@ const TaskProvider = ({ children }) => {
       );
 
       if (response.status === 201) {
+        toastHandler("success", "Task Added");
         dispatch({ type: "ADD_NEW_TASK", payload: response.data.task });
       }
     } catch (error) {
@@ -105,6 +106,7 @@ const TaskProvider = ({ children }) => {
         updatedData
       );
       if (response.status === 200) {
+        toastHandler("success", "Task Updated");
         dispatch({ type: "UPDATE_TASK", payload: response.data?.updatedTask });
       }
     } catch (error) {
@@ -121,6 +123,7 @@ const TaskProvider = ({ children }) => {
         `https://tasksyncapi.azurewebsites.net/tasks/${taskId}`
       );
       if (response.status === 200) {
+        toastHandler("delete", "Task Deleted");
         dispatch({ type: "DELETE_TASK", payload: response.data.deletedTask });
       }
     } catch (error) {

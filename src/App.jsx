@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Tasks, Metrics } from "./Pages";
+import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
         <Route path="/" element={<Tasks />} />
         <Route path="/metrics" element={<Metrics />} />
       </Routes>
+      <Toaster />
     </div>
   );
 };

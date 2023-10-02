@@ -49,6 +49,7 @@ const AddUpdateForm = (props) => {
           name="assignee"
           value={taskFormData.assignee}
           onChange={handleAddTask}
+          required
         />
         <TextField
           label="Task Title"
@@ -56,6 +57,7 @@ const AddUpdateForm = (props) => {
           name="name"
           value={taskFormData.name}
           onChange={handleAddTask}
+          required
         />
         <TextField
           label="Task Type"
@@ -63,8 +65,9 @@ const AddUpdateForm = (props) => {
           name="taskType"
           value={taskFormData.taskType}
           onChange={handleAddTask}
+          required
         />
-        <FormControl fullWidth>
+        <FormControl fullWidth required>
           <InputLabel>Task Priority</InputLabel>
           <Select
             name="priority"
@@ -79,7 +82,7 @@ const AddUpdateForm = (props) => {
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth>
+        <FormControl fullWidth required>
           <InputLabel>Task Status</InputLabel>
           <Select
             name="status"
@@ -100,18 +103,21 @@ const AddUpdateForm = (props) => {
           name="summary"
           value={taskFormData.summary}
           onChange={handleAddTask}
+          required
         />
         <input
           type="date"
           name="startDate"
           value={taskFormData.startDate}
           onChange={handleAddTask}
+          required
         />
         <input
           type="date"
           name="endDate"
           value={taskFormData.endDate}
           onChange={handleAddTask}
+          required
         />
       </div>
       <div className="flex gap-3">

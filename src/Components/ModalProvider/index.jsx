@@ -6,7 +6,7 @@ import { IconButton } from "@mui/material";
 const ModalProvider = (props) => {
   const { children, OpenModalAction, isOpen, closeModal, title } = props;
   return (
-    <div>
+    <div className="flex">
       {OpenModalAction}
       <Modal open={isOpen} onClose={closeModal}>
         <div className="text-[#292524] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] bg-[#e7e5e4] p-4 flex flex-col gap-4 rounded dark:text-[#fafaf9] dark:bg-[#292524]">

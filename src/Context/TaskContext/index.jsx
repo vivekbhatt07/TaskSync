@@ -67,7 +67,7 @@ const TaskProvider = ({ children }) => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        "https://tasksync-nodejs-restapi.onrender.com/tasks"
+        "https://tasksyncapi.azurewebsites.net/tasks"
       );
       if (response.status === 200) {
         dispatch({ type: "SET_DATA", payload: response.data });
@@ -83,7 +83,7 @@ const TaskProvider = ({ children }) => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "https://tasksync-nodejs-restapi.onrender.com/tasks",
+        "https://tasksyncapi.azurewebsites.net/tasks",
         task
       );
       console.log(response);
@@ -103,7 +103,7 @@ const TaskProvider = ({ children }) => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        `https://tasksync-nodejs-restapi.onrender.com/tasks/${taskId}`,
+        `https://tasksyncapi.azurewebsites.net/tasks/${taskId}`,
         updatedTask
       );
       if (response.status === 200) {
@@ -120,7 +120,7 @@ const TaskProvider = ({ children }) => {
     setIsLoading(true);
     try {
       const response = await axios.delete(
-        `https://tasksync-nodejs-restapi.onrender.com/tasks/${taskId}`
+        `https://tasksyncapi.azurewebsites.net/tasks/${taskId}`
       );
       if (response.status === 200) {
         dispatch({ type: "DELETE_TASK", payload: response.data.deletedTask });

@@ -4,14 +4,15 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App.jsx";
 import "./index.css";
 import { ThemeProvider } from "./Context/index.jsx";
-import { TaskProvider } from "./Context/index.jsx";
+import { store } from "./app/store.js";
+import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Router>
-    <ThemeProvider>
-      <TaskProvider>
+    <Provider store={store}>
+      <ThemeProvider>
         <App />
-      </TaskProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Provider>
   </Router>
 );

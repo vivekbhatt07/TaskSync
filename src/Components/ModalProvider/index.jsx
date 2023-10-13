@@ -4,7 +4,8 @@ import { Close } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 
 const ModalProvider = (props) => {
-  const { children, OpenModalAction, isOpen, closeModal, title } = props;
+  const { children, OpenModalAction, isOpen, closeModal, title, modalId } =
+    props;
   return (
     <div className="flex">
       {OpenModalAction}

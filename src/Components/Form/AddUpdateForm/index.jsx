@@ -9,7 +9,8 @@ import {
 } from "@mui/material";
 
 const AddUpdateForm = (props) => {
-  const { closeForm, formAction, isEdit } = props;
+  const { closeForm, isEdit, formAction } = props;
+  console.log(isEdit);
   const [taskFormData, setTaskFormData] = useState({
     assignee: isEdit ? isEdit?.assignee : "",
     name: isEdit ? isEdit?.name : "",
@@ -31,7 +32,7 @@ const AddUpdateForm = (props) => {
   const handleAddTaskSubmit = (event) => {
     event.preventDefault();
     if (isEdit) {
-      formAction(isEdit?._id, taskFormData);
+      formAction(props._id, taskFormData);
     } else {
       formAction(taskFormData);
     }
@@ -40,6 +41,7 @@ const AddUpdateForm = (props) => {
 
   const priorityList = ["Low", "Medium", "High"];
   const StatusList = ["Ready", "In Progress", "Testing", "Done"];
+
   return (
     <form className="flex flex-col p-4 gap-6" onSubmit={handleAddTaskSubmit}>
       <div className="flex flex-col gap-4">

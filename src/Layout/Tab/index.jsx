@@ -2,17 +2,38 @@ import React, { useState } from "react";
 import { tabData } from "./TabData";
 import TabItem from "./TabItem";
 import { Button, Tooltip } from "@mui/material";
-import { useTask } from "../../Context";
 import ModalProvider from "../../Components/ModalProvider";
 import { AddUpdateForm } from "../../Components";
 import { Add } from "@mui/icons-material";
 import { toastHandler } from "../../Utils";
+import {
+  setModal,
+  MODALTYPES,
+  modalInitialState,
+} from "../../features/modal/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask } from "../../features/task/taskSlice";
+import { addTaskApiResponse } from "../../apiResponse/taskApiResponse";
 
 const Tab = () => {
-  const { addNewTask } = useTask();
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const openAddModal = () => setIsAddModalOpen(true);
-  const closeAddModal = () => setIsAddModalOpen(false);
+  const modalState = useSelector((state) => state.modal);
+  const dispatch = useDispatch();
+
+  const closeAddTaskModal = () => {
+    dispatch(setModal(modalInitialState));
+  };
+
+  const addTaskHandler = async (task) => {
+    try {
+      const response = await addTaskApiResponse(task);
+      if (response.status === 201) {
+        // toastHandler("success", "Task Added");
+        dispatch(addTask(response.data.task));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <ul className="bg-200 flex dark:bg-600">
@@ -21,14 +42,20 @@ const Tab = () => {
       })}
       <ModalProvider
         title="ADD TASK"
-        isOpen={isAddModalOpen}
-        closeModal={closeAddModal}
+        isOpen={modalState.open && modalState.type === "ADD_TASK_MODAL"}
+        closeModal={closeAddTaskModal}
         OpenModalAction={
           <Tooltip title="Add Task">
             <Button
               variant="contained"
               onClick={() => {
-                openAddModal();
+                dispatch(
+                  setModal({
+                    open: true,
+                    type: MODALTYPES.ADD_TASK_MODAL,
+                    payload: null,
+                  })
+                );
               }}
               sx={{
                 borderRadius: "0",
@@ -43,7 +70,10 @@ const Tab = () => {
           </Tooltip>
         }
       >
-        <AddUpdateForm closeForm={closeAddModal} formAction={addNewTask} />
+        <AddUpdateForm
+          closeForm={closeAddTaskModal}
+          formAction={addTaskHandler}
+        />
       </ModalProvider>
     </ul>
   );

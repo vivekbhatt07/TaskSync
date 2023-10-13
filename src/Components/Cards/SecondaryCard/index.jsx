@@ -4,11 +4,7 @@ import { Draggable } from "react-beautiful-dnd";
 import Tooltip from "@mui/material/Tooltip";
 import "./SecondaryCard.css";
 import {
-  ArrowDownward,
-  ArrowUpward,
   ErrorRounded,
-  AccessTimeFilled,
-  MoreVert,
   Delete,
   Edit,
   ArrowCircleUpRounded,
@@ -16,15 +12,58 @@ import {
 } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { truncateString } from "../../../Utils";
-import { useTask } from "../../../Context";
+
 import ModalProvider from "../../ModalProvider";
 import { AddUpdateForm } from "../../Form";
+import {
+  setModal,
+  MODALTYPES,
+  modalInitialState,
+} from "../../../features/modal/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteTaskApiResponse,
+  updateTaskApiResponse,
+} from "../../../apiResponse/taskApiResponse";
+import { deleteTask, updateTask } from "../../../features/task/taskSlice";
 
 const SecondaryCard = (props) => {
-  const { deleteTask, updateTask } = useTask();
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const openEditModal = () => setIsEditModalOpen(true);
-  const closeEditModal = () => setIsEditModalOpen(false);
+  const modalState = useSelector((state) => state.modal);
+  const taskList = useSelector((state) => state.task.allTaskList);
+  const isTask = taskList.findIndex((task) => task._id === props._id);
+
+  const dispatch = useDispatch();
+
+  const closeUpdateTaskModal = () => {
+    dispatch(setModal(modalInitialState));
+  };
+
+  const deleteTaskHandler = async (taskId) => {
+    try {
+      const response = await deleteTaskApiResponse(taskId);
+      if (response.status === 200) {
+        // toastHandler("delete", "Task Deleted");
+        dispatch(deleteTask(response.data.deletedTask._id));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateTaskHandler = async (taskId, updatedData) => {
+    try {
+      const response = await updateTaskApiResponse(taskId, updatedData);
+      if (response.status === 200) {
+        // toastHandler("success", "Task Updated");
+        dispatch(updateTask(response.data.updatedTask));
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const {
     _id,
     name,
@@ -98,26 +137,40 @@ const SecondaryCard = (props) => {
                   </Tooltip>
                 </span> */}
                 <Tooltip title="Delete">
-                  <IconButton onClick={() => deleteTask(_id)}>
+                  <IconButton onClick={() => deleteTaskHandler(_id)}>
                     <Delete />
                   </IconButton>
                 </Tooltip>
                 <ModalProvider
                   title="UPDATE TASK"
-                  isOpen={isEditModalOpen}
-                  closeModal={closeEditModal}
+                  isOpen={
+                    modalState.open && modalState.type === "UPDATE_TASK_MODAL"
+                  }
+                  closeModal={closeUpdateTaskModal}
                   OpenModalAction={
                     <Tooltip title="Edit">
-                      <IconButton onClick={openEditModal}>
+                      <IconButton
+                        id={props._id}
+                        onClick={(e) => {
+                          dispatch(
+                            setModal({
+                              open: true,
+                              type: MODALTYPES.UPDATE_TASK_MODAL,
+                              payload: null,
+                            })
+                          );
+                        }}
+                      >
                         <Edit />
                       </IconButton>
                     </Tooltip>
                   }
+                  modalId={props._id}
                 >
                   <AddUpdateForm
-                    closeForm={closeEditModal}
-                    formAction={updateTask}
+                    closeForm={closeUpdateTaskModal}
                     isEdit={props}
+                    formAction={updateTaskHandler}
                   />
                 </ModalProvider>
               </div>

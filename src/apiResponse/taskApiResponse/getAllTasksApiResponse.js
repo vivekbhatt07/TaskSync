@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getAllTasks = async () =>
+const getAllTasksApiResponse = async () =>
   await axios.get("https://tasksyncapi.azurewebsites.net/tasks");
 
-export default getAllTasks;
+export default getAllTasksApiResponse;

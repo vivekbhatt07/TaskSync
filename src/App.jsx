@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { Tasks, Metrics } from "./Pages";
+import { Tasks, Metrics, TaskTable } from "./Pages";
 import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
@@ -10,6 +10,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Tasks />} />
         <Route path="/metrics" element={<Metrics />} />
+        <Route path="/taskTable" element={<TaskTable />} />
       </Routes>
       <Toaster />
     </div>

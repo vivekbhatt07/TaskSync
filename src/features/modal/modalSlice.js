@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const modalInitialState = {
+export const modalInitialState = {
   open: false,
   type: null,
   payload: null,
 };
 
-const MODALTYPES = {
+export const MODALTYPES = {
   ADD_TASK_MODAL: "ADD_TASK_MODAL",
   UPDATE_TASK_MODAL: "UPDATE_TASK_MODAL",
 };
@@ -21,6 +21,6 @@ export const modalSlice = createSlice({
   },
 });
 
-export const { setModal } = taskSlice.actions;
+export const { setModal } = modalSlice.actions;
 
 export default modalSlice.reducer;

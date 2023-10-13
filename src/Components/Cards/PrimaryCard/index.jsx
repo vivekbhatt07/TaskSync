@@ -1,14 +1,13 @@
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import { Add } from "@mui/icons-material";
-import { useTask } from "../../../Context/TaskContext";
 import SecondaryCard from "../SecondaryCard";
 import "./PrimaryCard.css";
+import { useDispatch, useSelector } from "react-redux";
 
 const PrimaryCard = ({ cardVariant }) => {
-  const { state, filteredTaskList } = useTask();
-
-  const currentStatusTaskList = filteredTaskList.filter((currentTask) => {
+  const taskList = useSelector((state) => state.task.allTaskList);
+  const currentStatusTaskList = taskList.filter((currentTask) => {
     return currentTask.status === cardVariant;
   });
 

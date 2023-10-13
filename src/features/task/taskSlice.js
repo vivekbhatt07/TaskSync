@@ -1,21 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const initialState = {
-  tasks: [{ id: 1, text: Hello }],
+const initialTaskState = {
+  isLoading: false,
+  allTaskList: [],
+  error: "",
+  // readyTaskList: [],
+  // inProgressList: [],
+  // testingList: [],
+  // doneList: [],
 };
 
 export const taskSlice = createSlice({
   name: "task",
-  initialState,
+  initialState: initialTaskState,
   reducers: {
     setTask: (state, action) => {
-      return;
+      state.allTaskList = action.payload;
     },
-    addTask: (state, action) => {},
-    deleteTask: (state, action) => {},
-    updateTask: (state, action) => {},
+    addTask: (state, action) => {
+      state.allTaskList.push(action.payload);
+    },
+    deleteTask: (state, action) => {
+      state.allTaskList = state.allTaskList.filter(
+        (task) => task._id !== action.payload
+      );
+    },
+    updateTask: (state, action) => {
+      state.allTaskList = state.allTaskList.map((task) =>
+        task._id === action.payload._id ? action.payload : task
+      );
+    },
   },
 });
 
-export const { ADD_TASK, DELETE_TASK, UPDATE_TASK } = taskSlice.actions;
+export const { setTask, addTask, deleteTask, updateTask } = taskSlice.actions;
 export default taskSlice.reducer;

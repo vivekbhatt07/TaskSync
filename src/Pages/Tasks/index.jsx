@@ -1,15 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { DragDropContext } from "react-beautiful-dnd";
 import { PageWrapper } from "../../Layout";
-import { useTask } from "../../Context/TaskContext";
 import { PrimaryCard, Filter, LightLoader, DarkLoader } from "../../Components";
 import "./Tasks.css";
 import { useTheme } from "../../Context/ThemeContext";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllTasksApiResponse } from "../../apiResponse/taskApiResponse";
+import { setTask } from "../../features/task/taskSlice";
+import { setModal } from "../../features/modal/modalSlice.js";
 
 const taskStatusList = ["Ready", "In Progress", "Testing", "Done"];
+
 const Tasks = () => {
-  const { state, dispatch, filteredTaskList, isLoading } = useTask();
+  const taskList = useSelector((state) => state.task.allTaskList);
+
+  const dispatch = useDispatch();
+
   const { isDarkTheme } = useTheme();
+
+  const getAllTasksHandler = async () => {
+    try {
+      const response = await getAllTasksApiResponse();
+      if (response.status === 200) {
+        dispatch(setTask(response.data));
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+    }
+  };
 
   const handleDragEnd = (result) => {
     const { destination, source, draggableId } = result;
@@ -22,7 +42,7 @@ const Tasks = () => {
     let updatingTask;
     let taskPlacementIndex = -1;
     let destinationIndexesCount = 0;
-    let changedTask = state.taskList.filter((task, index) => {
+    let changedTask = taskList.filter((task, index) => {
       if (
         destinationIndexesCount < destination.index &&
         task.status === destination.droppableId
@@ -47,21 +67,22 @@ const Tasks = () => {
       ...changedTask.slice(taskPlacementIndex),
     ];
 
-    dispatch({ type: "SET_DATA", payload: updatedTaskList });
+    dispatch(setTask(updatedTaskList));
   };
+
+  useEffect(() => {
+    getAllTasksHandler();
+  }, []);
 
   return (
     <PageWrapper>
-      <Filter />
+      {/* <Filter /> */}
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="p-8 task_list">
-          {isLoading && (isDarkTheme ? <DarkLoader /> : <LightLoader />)}
-          {!isLoading &&
-            taskStatusList.map((currentTask, currentIndex) => {
-              return (
-                <PrimaryCard key={currentIndex} cardVariant={currentTask} />
-              );
-            })}
+          {/* {isLoading && (isDarkTheme ? <DarkLoader /> : <LightLoader />)} */}
+          {taskStatusList.map((currentTask, currentIndex) => {
+            return <PrimaryCard key={currentIndex} cardVariant={currentTask} />;
+          })}
         </div>
       </DragDropContext>
     </PageWrapper>

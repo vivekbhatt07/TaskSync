@@ -21,11 +21,13 @@ import {
   RadioGroup,
   Radio,
 } from "@mui/material";
-import { useTask } from "../../Context/TaskContext";
+// import { useTask } from "../../Context/TaskContext";
 import "./Filter.css";
+import { useDispatch, useSelector } from "react-redux";
 
 const Filter = () => {
-  const { state, dispatch } = useTask();
+  const taskList = useSelector((state) => state.task.allTaskList);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -35,13 +37,13 @@ const Filter = () => {
     setAnchorEl(null);
   };
 
-  const assigneeList = state.taskList.reduce((list, currentTask) => {
+  const assigneeList = taskList.reduce((list, currentTask) => {
     return list.includes(currentTask.assignee)
       ? list
       : [...list, currentTask.assignee];
   }, []);
 
-  const priorityList = state.taskList.reduce((list, currentTask) => {
+  const priorityList = taskList.reduce((list, currentTask) => {
     return list.includes(currentTask.priority)
       ? list
       : [...list, currentTask.priority];
@@ -49,7 +51,7 @@ const Filter = () => {
 
   return (
     <div className="flex flex-col gap-4 py-4 px-8 md:flex-row">
-      <div className="relative flex input_filter_wrap bg-[#fff]">
+      {/* <div className="relative flex input_filter_wrap bg-[#fff]">
         <label className="flex gap-2 px-2 text-800">
           <div className="py-2">
             <Search />
@@ -59,12 +61,7 @@ const Filter = () => {
             placeholder="Search by Name, Type  and Assignee"
             type="search"
             value={state.filterBy.searchText}
-            onChange={(e) => {
-              dispatch({
-                type: "FILTER_BY_SEARCH",
-                payload: { label: "SEARCH", value: e.target.value },
-              });
-            }}
+            onChange={(e) => {}}
           />
         </label>
       </div>
@@ -96,7 +93,7 @@ const Filter = () => {
           open={open}
           onClose={handleClose}
           TransitionComponent={Fade}
-          // sx={{ padding: "16px" }}
+          sx={{ padding: "16px" }}
         >
           <div className="flex justify-between items-center px-4">
             <span>Filter</span>
@@ -210,14 +207,12 @@ const Filter = () => {
             textTransform: "capitalize",
           }}
           className="basis-1/2 md:basis-auto"
-          onClick={(e) => {
-            dispatch({ type: "CLEAR_FILTER", payload: "" });
-          }}
+          onClick={(e) => {}}
         >
           <Clear />
           Clear Filter
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };

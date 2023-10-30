@@ -1,19 +1,19 @@
 import React from "react";
 import { PageWrapper } from "../../Layout";
 import { PieChart } from "../../Components";
-import { useTask } from "../../Context/TaskContext";
+import { useDispatch, useSelector } from "react-redux";
 
 const Metrics = () => {
-  const { state, dispatch } = useTask();
+  const taskList = useSelector((state) => state.task.allTaskList);
 
-  const priorityNameList = state.taskList.reduce((list, currentTask) => {
+  const priorityNameList = taskList.reduce((list, currentTask) => {
     return list.includes(currentTask.priority)
       ? list
       : [...list, currentTask.priority];
   }, []);
 
   const priorityDataList = priorityNameList.map((currentPriority) => {
-    return state.taskList.reduce((sum, currentTask) => {
+    return taskList.reduce((sum, currentTask) => {
       return currentPriority == currentTask.priority ? sum + 1 : sum;
     }, 0);
   });

@@ -10,7 +10,6 @@ import {
 
 const AddUpdateForm = (props) => {
   const { closeForm, isEdit, formAction } = props;
-  console.log(isEdit);
   const [taskFormData, setTaskFormData] = useState({
     assignee: isEdit ? isEdit?.assignee : "",
     name: isEdit ? isEdit?.name : "",
@@ -32,6 +31,7 @@ const AddUpdateForm = (props) => {
   const handleAddTaskSubmit = (event) => {
     event.preventDefault();
     if (isEdit) {
+      console.log("isEdit");
       formAction(props._id, taskFormData);
     } else {
       formAction(taskFormData);

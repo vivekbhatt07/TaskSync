@@ -28,9 +28,9 @@ import {
 import { deleteTask, updateTask } from "../../../features/task/taskSlice";
 
 const SecondaryCard = (props) => {
+  console.log(props);
   const modalState = useSelector((state) => state.modal);
   const taskList = useSelector((state) => state.task.allTaskList);
-  const isTask = taskList.findIndex((task) => task._id === props._id);
 
   const dispatch = useDispatch();
 
@@ -51,8 +51,10 @@ const SecondaryCard = (props) => {
   };
 
   const updateTaskHandler = async (taskId, updatedData) => {
+    console.log({ taskId, updatedData });
     try {
       const response = await updateTaskApiResponse(taskId, updatedData);
+      console.log(response);
       if (response.status === 200) {
         // toastHandler("success", "Task Updated");
         dispatch(updateTask(response.data.updatedTask));
@@ -143,19 +145,16 @@ const SecondaryCard = (props) => {
                 </Tooltip>
                 <ModalProvider
                   title="UPDATE TASK"
-                  isOpen={
-                    modalState.open && modalState.type === "UPDATE_TASK_MODAL"
-                  }
+                  isOpen={modalState.open && modalState.type === props._id}
                   closeModal={closeUpdateTaskModal}
                   OpenModalAction={
                     <Tooltip title="Edit">
                       <IconButton
-                        id={props._id}
                         onClick={(e) => {
                           dispatch(
                             setModal({
                               open: true,
-                              type: MODALTYPES.UPDATE_TASK_MODAL,
+                              type: props._id,
                               payload: null,
                             })
                           );
